@@ -1,36 +1,24 @@
 ---
   pool: Default
   
-  
   trigger: none
   
   pr:
     - main
+
+  resources:
+    repositories:
+      - repository: reusabPublicAssets
+        type: github
+        name: VenkeyBoda/AzureDevops_Templates
+        ref: 'refs/heads/main'
+        endpoint: 'github.com_VenkeyBoda'  
   
   steps:
-    - task: SonarCloudPrepare@3
-      inputs:
-        SonarCloud: SONAR_CLOUD
-        scannerMode: other
-        organization: dec24
-    - task: Maven@4
-      inputs:
-        mavenPomFile: pom.xml
-        goals: package
-        publishJUnitResults: true
+    - template: maven/maven.build.yaml@reusabPublicAssets
+      parameters:
+        goals: 'package'
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        #jdkVersionOption: "1.17"
-        sonarQubeRunAnalysis: true
-    - task: CopyFiles@2
-      inputs:
-        contents: '**/spring-petclinic*.jar'
-        targetFolder: $(Build.ArtifactStagingDirectory)
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: $(Build.Repository.Name)
-  
-    - task: SonarCloudPublish@3
-      inputs:
-        pollingTimeoutSec: '300'
+        specificversion: ''
+        artifactPath: '**/spring-petclinic*.jar'
   
