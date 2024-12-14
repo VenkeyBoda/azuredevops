@@ -20,5 +20,5 @@
               goals: 'package'
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
               specificversion: ''
-              artifactPath: '**/spring-petclinic*.jar'
+              artifactPath: '**/spring-petclinic*.jar
   
