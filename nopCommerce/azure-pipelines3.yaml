@@ -1,0 +1,27 @@
+---
+  pool: Default
+  
+  trigger: none
+  
+  pr:
+    - develop 
+
+  resources:
+    repositories:
+      - repository: reusabPublicAssets
+        type: github
+        name: VenkeyBoda/AzureDevops_Templates
+        ref: 'refs/heads/main'
+        endpoint: 'github.com_VenkeyBoda'
+      - repository: reusabPrivateAssets
+        type: github
+        name: VenkeyBoda/AzureDevops_Templates
+        ref: 'refs/heads/main'
+        endpoint: 'github.com_VenkeyBoda'        
+  
+  steps:
+    - template: DotNetcore/dotnetcore.build.yaml@reusabPublicAssets
+      parameters:
+        mainproject: 'src/Presentation/Nop.Web/Nop.Web.csproj'
+        testproject: 'src/Tests/Nop.Tests/Nop.Tests.csproj'
+        runTests: false

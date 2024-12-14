@@ -1,0 +1,45 @@
+---
+    pool: Default
+    
+    trigger: none
+    
+    pr:
+      - develop 
+
+    parameters:
+     - name: command
+       displayName: command
+       type: string
+       default: Build
+       values:
+         - Build
+         - publish
+         - test
+    
+    variables:
+      webproject: 'src/Presentation/Nop.Web/Nop.Web.csproj'
+      testproject: 'src/Tests/Nop.Tests/Nop.Tests.csproj'
+
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: Build the code
+        inputs:
+          command: 'build'
+          projects: $(webproject)
+      - task: DotNetCoreCLI@2
+        displayName: publish nopCommerce
+        inputs:
+          command: 'publish'
+          publishWebProjects: false
+          projects: $(webproject)
+          arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
+          zipAfterPublish: true
+          modifyOutputPath: true
+      - task: CopyFiles@2
+        inputs:
+          contents: 'scripts/**'
+          targetFolder: '$(Build.ArtifactStagingDirectory)'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: drop

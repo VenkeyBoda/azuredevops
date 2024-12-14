@@ -1,0 +1,15 @@
+---
+  pool: Default
+  
+  trigger: none
+  
+  pr:
+    - develop 
+  
+  
+  steps:
+    - template: 'templates/dotnetcore.build.yaml'
+      parameters:
+        mainproject: 'src/Presentation/Nop.Web/Nop.Web.csproj'
+        testproject: 'src/Tests/Nop.Tests/Nop.Tests.csproj'
+        runTests: true
