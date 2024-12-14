@@ -14,7 +14,6 @@
         ref: 'refs/heads/main'
         endpoint: 'github.com_VenkeyBoda'  
   
-<<<<<<< HEAD
         steps:
           - template: maven/maven.build.yaml@reusabPublicAssets
             parameters:
@@ -22,13 +21,5 @@
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
               specificversion: ''
               artifactPath: '**/spring-petclinic*.jar'
-=======
-  steps:
-    - template: maven/maven.build.yaml@reusabPublicAssets
-      parameters:
-        goals: 'package'
-        testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        specificversion: ''
-        artifactPath: '**/spring-petclinic*.jar'
->>>>>>> 9122ac84de5b7e63d2f4ec4f073056d45fb17c42
+
   
