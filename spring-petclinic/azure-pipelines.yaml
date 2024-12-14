@@ -1,20 +1,24 @@
 ---
-    pool: Default
+  pool: Default
+  
+  trigger: none
+  
+  pr:
+    - main
 
-    trigger: none
-   
-    pr:
-      - main
-
-    steps:
-      - script: echo "hello world"
-        displayName: 'run the "hello world"'
-      - script: echo "my name is venkatesh"
-        displayName: "dispaly my name" 
-
-
-
-        
-
-
-        
+  resources:
+    repositories:
+      - repository: reusabPublicAssets
+        type: github
+        name: VenkeyBoda/AzureDevops_Templates
+        ref: 'refs/heads/main'
+        endpoint: 'github.com_VenkeyBoda'  
+  
+  steps:
+    - template: maven/maven.build.yaml@reusabPublicAssets
+      parameters:
+        goals: 'package'
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        specificversion: ''
+        artifactPath: '**/spring-petclinic*.jar'
+  
