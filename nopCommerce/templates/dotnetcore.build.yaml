@@ -1,0 +1,40 @@
+  parameters:
+    - name: mainproject
+      type: string
+      default: '**/*.csproj'
+    - name: testproject
+      type: string
+      default: '**/*Tests.csproj'
+    - name: runTests
+      type: boolean
+      default: false  
+
+  steps:
+    - task: DotNetCoreCLI@2
+      displayName: Build the code
+      inputs:
+        command: 'build'
+        projects: ${{parameters.mainproject}}
+    - task: DotNetCoreCLI@02
+      displayName: Test the code
+      inputs:
+        command: 'Test'
+        projects: ${{parameters.mainproject}}
+      condition: eq(${{parameters.runTests}}, false)        
+    - task: DotNetCoreCLI@2
+      displayName: 'publish $(Build.Repository.Name)'
+      inputs:
+        command: 'publish'
+        publishWebProjects: false
+        projects: ${{parameters.mainproject}}
+        arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
+        zipAfterPublish: true
+        modifyOutputPath: true
+    - task: CopyFiles@2
+      inputs:
+        contents: 'scripts/**'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: $(Build.Repository.Name)
