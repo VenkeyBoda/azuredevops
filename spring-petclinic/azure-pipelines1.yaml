@@ -21,4 +21,3 @@
               testResultsFiles: '**/surefire-reports/TEST-*.xml'
               specificversion: ''
               artifactPath: '**/spring-petclinic*.jar'
-  
