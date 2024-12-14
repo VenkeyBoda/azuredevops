@@ -16,12 +16,3 @@
 
   extends:
     template: maven/maven.pipeline.yaml@reusablePublicAssets
-
-
-
-<<<<<<< HEAD
-=======
-
-
-    
->>>>>>> 9122ac84de5b7e63d2f4ec4f073056d45fb17c42
