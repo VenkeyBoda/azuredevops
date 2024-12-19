@@ -1,5 +1,7 @@
-"""
-find the largest prime number
+""" find the largest prime number
+
+number(int)
+
 """
 number = 13195
 for factor in range(number-1,1,-1):
@@ -11,4 +13,4 @@ for factor in range(number-1,1,-1):
           break
     if is_prime:
            print(factor)
-           break
+           break 
